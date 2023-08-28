@@ -1,0 +1,29 @@
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+
+public class NumberGuessingGameTest {
+
+    @Test
+    public void testCorrectGuess() {
+        String simulatedInput = "500\n";
+        InputStream originalSystemIn = System.in;
+        System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
+
+        ByteArrayOutputStream fakeOutput = new ByteArrayOutputStream();
+        PrintStream originalSystemOut = System.out;
+        System.setOut(new PrintStream(fakeOutput));
+
+        NumberGuessingGame.main(null);
+
+        System.setIn(originalSystemIn);
+        System.setOut(originalSystemOut);
+
+        String expectedOutput = "Congratulations! You guessed the number 500 in 1 attempts.";
+        assertEquals(expectedOutput, fakeOutput.toString().trim());
+    }
+
+}
